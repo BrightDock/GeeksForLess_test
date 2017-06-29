@@ -12,18 +12,12 @@ namespace GeeksForLess_test.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Users_types
+    public partial class AspNetUserLogins
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Users_types()
-        {
-            this.Users = new HashSet<Users>();
-        }
+        public string LoginProvider { get; set; }
+        public string ProviderKey { get; set; }
+        public string UserId { get; set; }
     
-        public int Id { get; set; }
-        public string Name { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Users> Users { get; set; }
+        public virtual AspNetUsers AspNetUsers { get; set; }
     }
 }

@@ -12,45 +12,46 @@ namespace GeeksForLess_test.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Users
+    public partial class AspNetUsers
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Users()
+        public AspNetUsers()
         {
+            this.AspNetUserClaims = new HashSet<AspNetUserClaims>();
+            this.AspNetUserLogins = new HashSet<AspNetUserLogins>();
             this.Likes = new HashSet<Likes>();
-            this.Themes = new HashSet<Themes>();
             this.Themes_messages = new HashSet<Themes_messages>();
-            this.UserClaim = new HashSet<UserClaim>();
-            this.UserLogin = new HashSet<UserLogin>();
-            this.Role = new HashSet<Role>();
+            this.Themes = new HashSet<Themes>();
+            this.AspNetRoles = new HashSet<AspNetRoles>();
         }
     
-        public long Id { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; }
         public string Last_name { get; set; }
-        public string Nick_name { get; set; }
-        public string Login { get; set; }
-        public string Password { get; set; }
-        public string Avatar { get; set; }
-        public int User_type { get; set; }
         public string UserName { get; set; }
+        public string Avatar { get; set; }
+        public string Email { get; set; }
+        public bool EmailConfirmed { get; set; }
         public string PasswordHash { get; set; }
         public string SecurityStamp { get; set; }
-        public string Descriminator { get; set; }
-        public bool isConfirmed { get; set; }
+        public string PhoneNumber { get; set; }
+        public bool PhoneNumberConfirmed { get; set; }
+        public bool TwoFactorEnabled { get; set; }
+        public Nullable<System.DateTime> LockoutEndDateUtc { get; set; }
+        public bool LockoutEnabled { get; set; }
+        public int AccessFailedCount { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AspNetUserClaims> AspNetUserClaims { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AspNetUserLogins> AspNetUserLogins { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Likes> Likes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Themes_messages> Themes_messages { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Themes> Themes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Themes_messages> Themes_messages { get; set; }
-        public virtual Users_types Users_types { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserClaim> UserClaim { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserLogin> UserLogin { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Role> Role { get; set; }
+        public virtual ICollection<AspNetRoles> AspNetRoles { get; set; }
     }
 }

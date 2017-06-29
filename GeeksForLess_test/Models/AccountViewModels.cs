@@ -42,15 +42,14 @@ namespace GeeksForLess_test.Models
     public class ForgotViewModel
     {
         [Required]
-        [Display(Name = "Адрес электронной почты")]
+        [Display(Name = "Email или Логин")]
         public string Email { get; set; }
     }
 
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Адрес электронной почты")]
-        [EmailAddress]
+        [Display(Name = "Email или Логин")]
         public string Email { get; set; }
 
         [Required]
@@ -64,6 +63,20 @@ namespace GeeksForLess_test.Models
 
     public class RegisterViewModel
     {
+        [Required]
+        [Display(Name = "Имя")]
+        public string Name { get; set; }
+        
+        [Display(Name = "Фамилия")]
+        public string LastName { get; set; }
+
+        [Display(Name = "Ник")]
+        public string NickName { get; set; }
+
+        [Display(Name = "Аватар")]
+        [DataType(DataType.Upload)]
+        public string Avatar { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Адрес электронной почты")]

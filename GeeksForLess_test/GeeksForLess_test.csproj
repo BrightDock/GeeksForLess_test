@@ -177,7 +177,20 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Extensions\IdentityExtensions.cs" />
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\AspNetRoles.cs">
+      <DependentUpon>GeeksForLessTestDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspNetUserClaims.cs">
+      <DependentUpon>GeeksForLessTestDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspNetUserLogins.cs">
+      <DependentUpon>GeeksForLessTestDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspNetUsers.cs">
+      <DependentUpon>GeeksForLessTestDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\GeeksForLessTestDB.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -210,15 +223,6 @@
     <Compile Include="Models\Options.cs">
       <DependentUpon>GeeksForLessTestDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Role.cs">
-      <DependentUpon>GeeksForLessTestDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UserClaim.cs">
-      <DependentUpon>GeeksForLessTestDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UserLogin.cs">
-      <DependentUpon>GeeksForLessTestDB.tt</DependentUpon>
-    </Compile>
     <Compile Include="ProcessLess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -226,12 +230,6 @@
       <DependentUpon>GeeksForLessTestDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Themes_messages.cs">
-      <DependentUpon>GeeksForLessTestDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Users.cs">
-      <DependentUpon>GeeksForLessTestDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Users_types.cs">
       <DependentUpon>GeeksForLessTestDB.tt</DependentUpon>
     </Compile>
   </ItemGroup>

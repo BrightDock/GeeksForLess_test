@@ -25,15 +25,14 @@ namespace GeeksForLess_test.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
+        public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
+        public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
         public virtual DbSet<Likes> Likes { get; set; }
         public virtual DbSet<Likes_targets> Likes_targets { get; set; }
         public virtual DbSet<Options> Options { get; set; }
         public virtual DbSet<Themes> Themes { get; set; }
         public virtual DbSet<Themes_messages> Themes_messages { get; set; }
-        public virtual DbSet<Users> Users { get; set; }
-        public virtual DbSet<Users_types> Users_types { get; set; }
-        public virtual DbSet<Role> Role { get; set; }
-        public virtual DbSet<UserClaim> UserClaim { get; set; }
-        public virtual DbSet<UserLogin> UserLogin { get; set; }
+        public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
     }
 }

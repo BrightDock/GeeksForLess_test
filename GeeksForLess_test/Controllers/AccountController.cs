@@ -76,6 +76,14 @@ namespace GeeksForLess_test.Controllers
             // Сбои при входе не приводят к блокированию учетной записи
             // Чтобы ошибки при вводе пароля инициировали блокирование учетной записи, замените на shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            if (result == SignInStatus.Failure)
+            {
+                var user = UserManager.FindByEmail(model.Email);
+                if (user != null)
+                {
+                    result = await SignInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, shouldLockout: false);
+                }
+            }
             switch (result)
             {
                 case SignInStatus.Success:
@@ -151,7 +159,8 @@ namespace GeeksForLess_test.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.NickName, Email = model.Email, Name = model.Name, Last_name = model.LastName,
+                    Avatar = model.Avatar};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

@@ -9,7 +9,7 @@ namespace GeeksForLess_test.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(GeeksForLess_test.Models.GeeksForLessTestDBEntities context)

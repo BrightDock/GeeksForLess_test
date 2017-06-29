@@ -23,7 +23,7 @@ namespace GeeksForLess_test.Models
     
         public long Id { get; set; }
         public string Name { get; set; }
-        public long Author { get; set; }
+        public string Author { get; set; }
         public Nullable<long> Main_theme { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -31,6 +31,6 @@ namespace GeeksForLess_test.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Themes> Themes1 { get; set; }
         public virtual Themes Themes2 { get; set; }
-        public virtual Users Users { get; set; }
+        public virtual AspNetUsers AspNetUsers { get; set; }
     }
 }

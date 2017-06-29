@@ -14,11 +14,21 @@ namespace GeeksForLess_test.Models
     
     public partial class Themes_messages
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Themes_messages()
+        {
+            this.Themes_messages1 = new HashSet<Themes_messages>();
+        }
+    
         public long Id { get; set; }
         public long Theme { get; set; }
-        public long Author { get; set; }
+        public string Author { get; set; }
+        public Nullable<long> Reply_to { get; set; }
     
         public virtual Themes Themes { get; set; }
-        public virtual Users Users { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Themes_messages> Themes_messages1 { get; set; }
+        public virtual Themes_messages Themes_messages2 { get; set; }
+        public virtual AspNetUsers AspNetUsers { get; set; }
     }
 }

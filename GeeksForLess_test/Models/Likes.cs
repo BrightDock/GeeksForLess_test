@@ -17,9 +17,9 @@ namespace GeeksForLess_test.Models
         public long Id { get; set; }
         public long Target { get; set; }
         public int Target_type { get; set; }
-        public long Like_author { get; set; }
+        public string Like_author { get; set; }
     
         public virtual Likes_targets Likes_targets { get; set; }
-        public virtual Users Users { get; set; }
+        public virtual AspNetUsers AspNetUsers { get; set; }
     }
 }

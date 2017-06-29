@@ -11,13 +11,14 @@ namespace GeeksForLess_test.Models
     {
         public string Name { get; set; }
         public string Last_name { get; set; }
-        public string Nick_name { get; set; }
         public string Avatar { get; set; }
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Обратите внимание, что authenticationType должен совпадать с типом, определенным в CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
             // Здесь добавьте утверждения пользователя
+            userIdentity.AddClaim(new Claim("Name", this.Name.ToString()));
             return userIdentity;
         }
     }
@@ -25,7 +26,7 @@ namespace GeeksForLess_test.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("GeeksForLessTestDBEntities")
+            : base("GeeksForLessTestDBConnection", throwIfV1Schema: false)
         {
         }
 
