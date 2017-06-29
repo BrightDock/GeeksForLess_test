@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="11609dfb1a884f28b40fc227e4a4e0f1" Name="Diagram1" ZoomLevel="108">
+        <EntityTypeShape EntityType="GeeksForLessTestDBModel.Likes" Width="1.5" PointX="4.875" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GeeksForLessTestDBModel.Likes_targets" Width="1.5" PointX="6.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="GeeksForLessTestDBModel.Options" Width="1.5" PointX="1.125" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="GeeksForLessTestDBModel.Themes" Width="1.5" PointX="6.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="GeeksForLessTestDBModel.Themes_messages" Width="1.5" PointX="4.875" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="GeeksForLessTestDBModel.Users" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="GeeksForLessTestDBModel.Users_types" Width="1.5" PointX="1.125" PointY="2.875" IsExpanded="true" />
+        <AssociationConnector Association="GeeksForLessTestDBModel.FK_Likes_Likes_types" ManuallyRouted="false" />
+        <AssociationConnector Association="GeeksForLessTestDBModel.FK_Likes_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="GeeksForLessTestDBModel.FK_Themes_messages_Themes" ManuallyRouted="false" />
+        <AssociationConnector Association="GeeksForLessTestDBModel.FK_Themes_Themes" ManuallyRouted="false" />
+        <AssociationConnector Association="GeeksForLessTestDBModel.FK_Themes_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="GeeksForLessTestDBModel.FK_Themes_messages_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="GeeksForLessTestDBModel.FK_Users_Users_types" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="GeeksForLessTestDBModel.Role" Width="1.5" PointX="1.125" PointY="4.75" />
+        <EntityTypeShape EntityType="GeeksForLessTestDBModel.UserClaim" Width="1.5" PointX="8.625" PointY="1" />
+        <EntityTypeShape EntityType="GeeksForLessTestDBModel.UserLogin" Width="1.5" PointX="8.625" PointY="3.25" />
+        <AssociationConnector Association="GeeksForLessTestDBModel.FK_UserClaim_Users" />
+        <AssociationConnector Association="GeeksForLessTestDBModel.FK_UserLogin_Users" />
+        <AssociationConnector Association="GeeksForLessTestDBModel.UserRole" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

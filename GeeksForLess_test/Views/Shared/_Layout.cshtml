@@ -38,7 +38,10 @@
         </footer>
     </div>
 
+    @Styles.Render("~/Content/less")
+    @Styles.Render("~/Content/font-awesome")
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/Core")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>

@@ -8,6 +8,8 @@ namespace GeeksForLess_test
         //Дополнительные сведения об объединении см. по адресу: http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
+            BundleTable.EnableOptimizations = true;
+
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
@@ -24,8 +26,19 @@ namespace GeeksForLess_test
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/bootstrap.css"));
+
+            bundles.Add(new StyleBundle("~/Content/font-awesome").Include(
+                      "~/Content/font-awesome.min.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/Core").Include(
+                        "~/Scripts/Core.js"));
+
+            var lessBundle = new Bundle("~/Content/less");
+            lessBundle.Include("~/Content/*.less");
+            lessBundle.Transforms.Add(new ProcessLess());
+            lessBundle.Transforms.Add(new CssMinify());
+            bundles.Add(lessBundle);
         }
     }
 }
