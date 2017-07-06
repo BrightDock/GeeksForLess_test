@@ -380,6 +380,7 @@
     <Content Include="Views\Comments\AddComment.cshtml" />
     <Content Include="Views\Comments\ChangeComment.cshtml" />
     <Content Include="Views\Shared\_LikesPart.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

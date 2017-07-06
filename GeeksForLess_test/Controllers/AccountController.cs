@@ -52,6 +52,19 @@ namespace GeeksForLess_test.Controllers
             }
         }
 
+        [Authorize]
+        public ActionResult Index(string ID) {
+            if (string.IsNullOrEmpty(ID)) {
+                return RedirectToAction("Index", "Themes");
+            }
+
+            var db = new GeeksForLessTestDBEntities();
+
+            var user = db.AspNetUsers.FirstOrDefault(m => m.Id == ID);
+
+            return View(user);
+        }
+
         //
         // GET: /Account/Login
         [AllowAnonymous]
