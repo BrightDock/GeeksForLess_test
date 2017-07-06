@@ -1,8 +1,48 @@
 ﻿@model GeeksForLess_test.Models.AspNetUsers
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = Model.Name + ' ' + Model.Last_name + " (" + Model.UserName + ')';
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>@Model.Name</h2>
+<div class="row p-a-1">
+    <div class="user-detailed col-md-2 align-self-start">
+        <div class="author-avatar img-thumbnail rounded-circle">
+            <img src='@(Model.Avatar ?? "/Content/img/default_user.png")' class='rounded-circle' />
+        </div>
+    </div>
+    <div class="col-md-10 align-self-start">
+        <div class="card p-a-1 mb-3">
+            <h4 class="part-title">Обо мне:</h4>
+            <div class="row pl-3 pr-3 justify-content-start">
+                <div>
+                    <h5>Имя: @Model.Name</h5>
+                </div>
+                @if (!string.IsNullOrEmpty(Model.Last_name))
+                {
+                    <div>
+                        <h5>Фамилия: @Model.Last_name</h5>
+                    </div>
+                }
+            </div>
+        </div>
 
+        <div class="card p-a-1">
+            <h4 class="part-title">Я:</h4>
+            <div class="row pl-3 pr-3 justify-content-start">
+                <nav class="row user-about-additions">
+                    <div class="col text-center display-5 about-addition">
+                        <p class="mb-2">@Model.Likes.Count</p>
+                        <p class="h6 fw-2 text-uppercase">Лайков<br />поставил</p>
+                    </div>
+                    <div class="col text-center display-5 about-addition">
+                        <p class="mb-2">@Model.Themes.Count</p>
+                        <p class="h6 fw-2 text-uppercase">Публикаций<br />написал</p>
+                    </div>
+                    <div class="col text-center display-5 about-addition">
+                        <p class="mb-2">@Model.Themes_messages.Count</p>
+                        <p class="h6 fw-2 text-uppercase">Комментариев<br />опубликовал</p>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>

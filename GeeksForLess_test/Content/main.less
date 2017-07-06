@@ -29,8 +29,38 @@ body {
     padding: 1rem;
 }
 
+.lh-1{
+    line-height: 1;
+}
+
 .lh-2{
+    line-height: 1.5;
+}
+
+.lh-3{
     line-height: 2;
+}
+
+.fw-1{
+    font-weight: 100;
+}
+
+.fw-2{
+    font-weight: 300;
+}
+
+.fw-3{
+    font-weight: 500;
+}
+
+.fw-4{
+    font-weight: 700;
+}
+
+.display-5{
+    font-size: 2.5rem;
+    font-weight: 300;
+    line-height: 1.1;
 }
 
 h1, h2, h3, h4, h5, h6{
@@ -191,13 +221,6 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill{
     }
 }
 
-footer {
-    position: absolute;
-    padding-top: 1rem;
-    bottom: 0;
-    color: #000;
-}
-
 .input-container {
 	position: relative;
 	margin: 0;
@@ -280,6 +303,24 @@ footer {
     padding-bottom: .5rem;
     margin-bottom: 1.5rem;
     border-bottom: 2px solid #ff0000;
+}
+
+.user-detailed{
+    .author-avatar{
+        max-width: 200px;
+
+        img{
+            max-width: 200px;
+        }
+    }
+}
+
+.user-about-additions{
+
+    .about-addition{
+        color: #bfbfbf;
+        margin: 0 .5rem;
+    }
 }
 
 .author-avatar{
@@ -564,6 +605,13 @@ footer {
             text-overflow: ellipsis;
         }
     }
+}
+
+footer {
+    position: absolute;
+    padding-top: 1rem;
+    bottom: 0;
+    color: #000;
 }
 
 @media (max-width: 576px) {
