@@ -43,11 +43,11 @@ namespace GeeksForLess_test.Controllers
             var likes = db.Likes.Where(Like => Like.Target == theme.Id);
 
             var Messages = db.Themes_messages.Where(themeMessage => themeMessage.Theme == theme.Id);
-            var MessageLikes = new List<MessagesLikesView>();
+            var MessageLikes = new List<CommentLikesView>();
             foreach (var message in Messages)
             {
                 var Likes = db.Likes.Where(Like => Like.Target == message.Id/* && Like.Target_type == 1*/);
-                MessageLikes.Add(new MessagesLikesView() { Comment = message, Likes = Likes });
+                MessageLikes.Add(new CommentLikesView() { Comment = message, Likes = Likes });
             }
 
             ViewBag.user = db.AspNetUsers.Where(u => u.UserName == User.Identity.Name).FirstOrDefault();

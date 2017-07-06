@@ -1,4 +1,4 @@
-﻿@model IEnumerable<GeeksForLess_test.Models.MessagesLikesView>
+﻿@model IEnumerable<GeeksForLess_test.Models.CommentLikesView>
 
 <h4 class="mb-3">Комментарии</h4>
 @if (Model.Count() == 0)
@@ -53,11 +53,10 @@ else
                                 </button>
                             </div>
                             <div class="message-delete message-addition">
-                                <button class="btn-action btn-delete" data-action="delete" data-path="/Comments/RemoveMessage/" 
-                                    data-target="@Message.Comment.Id">
+                                <a href="/Comments/RemoveComment/@Message.Comment.Id" role="button" class="btn-action btn-delete" data-action="delete">
                                     <i class="fa fa-times" aria-hidden="true"></i>
                                     <span class="text-uppercase hidden-sm-down">удалить</span>
-                                </button>
+                                </a>
                             </div>
                         }
                         if (User.Identity.Name != Message.Comment.AspNetUsers.UserName)

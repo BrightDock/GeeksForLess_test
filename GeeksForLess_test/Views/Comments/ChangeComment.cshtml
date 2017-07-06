@@ -8,7 +8,7 @@
     {
         if (User.Identity.IsAuthenticated)
         {
-            using (Html.BeginForm("ChangeComment", "Comments", null,
+            using (Html.BeginForm("ChangeComment", "Comments", new{ ReturnUrl = ViewBag.ReturnUrl },
                 FormMethod.Post, new { @class = "form-horizontal new-message", role = "form", id = "change-message-form" }))
             {
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -18,8 +18,7 @@
                 @Html.LabelFor(m => m.ReplyToList)
                 @Html.DropDownListFor(m => m.ReplyToId, Model.ReplyToList, new
                 {
-                    @class = "col-12 pt-2 pb-2 pl-2 pr-2",
-                    @placeholder = "Ваш текст..."
+                    @class = "col-12 pt-2 pb-2 pl-2 pr-2"
                 })
             }
 
@@ -40,6 +39,16 @@
         <p>@ex</p>
     }
 
+    <script type="text/javascript">
+        var modalButton = $('.modal-submit-button');
+        var form = $('#change-message-form');
+
+        modalButton.attr('form', form.attr('id'));
+/*
+        modal.click(function () {
+            form.submit();
+        });*/
+    </script>
 
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")

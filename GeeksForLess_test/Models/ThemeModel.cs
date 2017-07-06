@@ -16,6 +16,6 @@ namespace GeeksForLess_test.Models
     {
         public Themes Theme { get; set; }
         public IEnumerable<Likes> Likes { get; set; }
-        public IEnumerable<MessagesLikesView> MessagesLikes { get; set; }
+        public IEnumerable<CommentLikesView> MessagesLikes { get; set; }
     }
 }

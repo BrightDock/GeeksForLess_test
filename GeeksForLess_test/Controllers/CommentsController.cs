@@ -23,7 +23,7 @@ namespace GeeksForLess_test.Controllers
         {
             if (!ID.HasValue)
             {
-                return View();
+                return PartialView(new CommentViewModel());
             }
 
             var db = new GeeksForLessTestDBEntities();
@@ -41,7 +41,7 @@ namespace GeeksForLess_test.Controllers
         {
 //            ViewBag.str = model.Reply_to + ' ' + model.Text + ' ' + model.Theme + ' ' + model.Author.Id;
 
-            if (!ModelState.IsValid || model == null)
+            if (!ModelState.IsValid)
             {
                 return PartialView(new CommentViewModel());
             }
@@ -66,26 +66,25 @@ namespace GeeksForLess_test.Controllers
 
         [Authorize]
         [HttpGet]
-        public ActionResult ChangeComment(long? ID)
+        public ActionResult ChangeComment(long? ID, string returnUrl)
         {
-            long? messageId = ID;
-
-            if (messageId != null) {
+            if (ID.HasValue) {
                 var db = new GeeksForLessTestDBEntities();
                 var messageRepeatTo = new ChangeCommentViewModel();
-                var message = db.Themes_messages.FirstOrDefault(m => m.Id == messageId);
+                var message = db.Themes_messages.FirstOrDefault(m => m.Id == ID);
 
                 messageRepeatTo.Message = message;
                 messageRepeatTo.ReplyToList = new List<SelectListItem>() {
-                new SelectListItem() { Text = "Выбрать ответ", Value = "0", Selected = true, Disabled = true } };
+                new SelectListItem() { Text = "Выбрать ответ", Value = "null", Selected = true } };
                 messageRepeatTo.ReplyToList = messageRepeatTo.ReplyToList.Concat(db.Themes_messages
-                    .Where(m => m.Id != messageId && m.Theme == message.Theme)
+                    .Where(m => m.Id != ID && m.Theme == message.Theme && m.Publication_date < message.Publication_date)
                     .Select(rTo => new SelectListItem() {
                         Text = rTo.Text,
                         Value = rTo.Id.ToString(),
-                        Selected = message.Themes_messages2.Id == rTo.Id ? true : false
+                        Selected = message.Reply_to == rTo.Id ? true : false
                     }));
 
+                ViewBag.ReturnUrl = returnUrl;
                 return PartialView(messageRepeatTo);
             }
             return PartialView(null);
@@ -93,21 +92,49 @@ namespace GeeksForLess_test.Controllers
 
         [Authorize]
         [HttpPost]
-        public bool ChangeComment(ChangeCommentViewModel model)
+        public ActionResult ChangeComment(ChangeCommentViewModel model, string returnUrl)
         {
-            
-            return true;
+            if (!ModelState.IsValid)
+            {
+                return RedirectToLocal(returnUrl);
+            }
+
+            Themes_messages Comment;
+            var db = new GeeksForLessTestDBEntities();
+            Comment = db.Themes_messages.Find(model.Message.Id);
+            var ReplyTo = db.Themes.Find(model.ReplyToId.Id);
+
+            if (Comment != null)
+            {
+                Comment.Reply_to = ReplyTo.Id;
+                Comment.Text = model.Message.Text;
+            }
+
+            db.SaveChanges();
+
+            return PartialView(Comment);
         }
 
         public async Task<ActionResult> RemoveComment(long? ID)
         {
             var db = new GeeksForLessTestDBEntities();
+            var comment = db.Themes_messages.Find(ID);
+            var theme = comment.Themes;
 
-            db.Themes_messages.Remove(db.Themes_messages.FirstOrDefault(message => message.Id == ID));
+            db.Themes_messages.Remove(comment);
 
             await db.SaveChangesAsync();
 
-            return View();
+            return RedirectToAction("GetTheme", "Themes", new { ID = theme.Id });
+        }
+
+        private ActionResult RedirectToLocal(string returnUrl)
+        {
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+            return RedirectToAction("Index", "Themes");
         }
     }
 }

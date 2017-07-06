@@ -26,6 +26,8 @@ namespace GeeksForLess_test.Models
         [Display(Name = "Текст сообщения")]
         public Themes_messages Message { get; set; }
 
+        public string ReturnUrl { get; set; }
+
         public Themes_messages ReplyToId { get; set; }
 
         [Required]
@@ -33,7 +35,7 @@ namespace GeeksForLess_test.Models
         public IEnumerable<SelectListItem> ReplyToList { get; set; }
     }
 
-    public class MessagesLikesView
+    public class CommentLikesView
     {
         [Display(Name = "Сообщение")]
         public Themes_messages Comment { get; set; }
