@@ -1,0 +1,94 @@
+﻿@model IEnumerable<GeeksForLess_test.Models.MessagesLikesView>
+
+<h4 class="mb-3">Комментарии</h4>
+@if (Model.Count() == 0)
+{
+    <p>Комментариев пока нет :(</p>
+}
+else
+{
+    foreach (var Message in Model)
+    {
+        <div class="message-body card row flex-row mb-3 pt-3 pb-3" id="@Message.Comment.Id">
+            <div class="col-2 align-self-start">
+                <a href="/Account/?ID=@Message.Comment.AspNetUsers.Id" class="message-author">
+                    <div class="author-avatar img-thumbnail rounded-circle">
+                        <img src='@(Message.Comment.AspNetUsers.Avatar ?? "/Content/img/default_user.png")' class='rounded-circle' />
+                    </div>
+                    <div class="message-author text-center">
+                        <h6>@Message.Comment.AspNetUsers.Name</h6>
+                    </div>
+                </a>
+            </div>
+            <div class="col-10">
+                <div class="message-head pb-1 mb-2">
+                    <div class="message-publication-date text-left row ml-1">
+                        <p class="mb-0">
+                            <i class="fa fa-clock-o" aria-hidden="true"></i>
+                            @(Message.Comment.Publication_date.HasValue ? Message.Comment.Publication_date.Value.ToString("dd.MM.yyyy - H:MM") : "")
+                        </p>
+                        @if (Message.Comment.Reply_to != null)
+                        {
+                            <p>
+                                <i class="fa fa-reply-all ml-4" aria-hidden="true"></i>
+                                #@Message.Comment.Reply_to
+                            </p>
+                        }
+                        <p class="col text-right">#@Message.Comment.Id</p>
+                    </div>
+                </div>
+                <div class="message-text">
+                    <span>@Message.Comment.Text</span>
+                </div>
+                <div class="message-additions row pt-3 mt-3 text-right justify-content-end">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        if (User.Identity.Name == Message.Comment.AspNetUsers.UserName)
+                        {
+                            <div class="message-delete message-addition">
+                                <button class="btn-action btn-change" data-action="change" data-path="/Comments/ChangeComment/"
+                                        data-bind="@Message.Comment.Id" data-toggle="modal" data-target="#Modal" data-whatever="Редакировать комментарий">
+                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                    <span class="text-uppercase hidden-sm-down">редакировать</span>
+                                </button>
+                            </div>
+                            <div class="message-delete message-addition">
+                                <button class="btn-action btn-delete" data-action="delete" data-path="/Comments/RemoveMessage/" 
+                                    data-target="@Message.Comment.Id">
+                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                    <span class="text-uppercase hidden-sm-down">удалить</span>
+                                </button>
+                            </div>
+                        }
+                        if (User.Identity.Name != Message.Comment.AspNetUsers.UserName)
+                        {
+                            <div class="message-reply addition-part">
+                                <button class="btn-action btn-reply" data-action="reply" data-path="/Comments/AddMessage/" 
+                                    data-target="@Message.Comment.Id">
+                                    <i class="fa fa-reply" aria-hidden="true"></i>
+                                    <span class="text-uppercase hidden-sm-down">ответить</span>
+                                </button>
+                            </div>
+                        }
+                        Html.RenderPartial("_LikesPart", 
+                            new Tuple<IEnumerable<GeeksForLess_test.Models.Likes>, long>(Message.Likes, Message.Comment.Id));
+                    }
+                    else
+                    {
+                        <div class="message-likes-count message-addition btn-action">
+                            <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                            <span class="count">
+                                @Message.Likes.Count()</span>
+                 </div>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+}
+
+@{
+    ViewBag.U = ViewBag.user;
+    var theme = (GeeksForLess_test.Models.Themes)ViewBag.Theme;
+    Html.RenderAction("AddComment", "Comments", new { ID = theme.Id });
+}

@@ -7,19 +7,30 @@
     @Html.AntiForgeryToken()
 
     <ul class="nav navbar-nav navbar-right">
-        <li>
-            @Html.ActionLink("Здравствуйте, " + (string.IsNullOrEmpty(User.Identity.GetUserName()) ? 
-                User.Identity.GetNameOfUser() : User.Identity.GetUserName()), "Index", "Manage", 
-                routeValues: null, htmlAttributes: new { title = "Manage" })
+        <li class="nav-item">
+            @Html.RawActionLink("<i class='fa fa-pencil-square-o' aria-hidden='true'></i> Написать", "AddTheme", "Themes",
+                routeValues: null, htmlAttributes: new { title = "Написать", @class = "nav-link" })
         </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Выйти</a></li>
+
+        <li class="nav-item">
+            <a href="/Account/?ID=@User.Identity.GetUserId()" class="nav-link" title="Личный кабинет">
+                @(string.IsNullOrEmpty(User.Identity.GetUserName()) ?
+                User.Identity.GetUserName() : User.Identity.GetNameOfUser())
+            </a>
+        </li>
+
+        <li class="nav-item">
+            @Html.RawActionLink("<i class='fa fa-gear' aria-hidden='true'></i> Настройки", "Index", "Manage", 
+                routeValues: null, htmlAttributes: new { title = "Настройки", @class = "nav-link" })
+        </li>
+        <li class="nav-item"><a href="javascript:document.getElementById('logoutForm').submit()" class = "nav-link">Выйти</a></li>
     </ul>
     }
 }
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Регистрация", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Выполнить вход", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        <li class="nav-item">@Html.MenuLink("Войти", "Login", "Account", "active", new string[] { "nav-link" }, "loginLink")</li>
+        <li class="nav-item btn btn-outline-success">@Html.MenuLink("Регистрация", "Register", "Account", "active", new string[] { "nav-link" }, "registerLink")</li>
     </ul>
 }

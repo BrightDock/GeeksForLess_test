@@ -17,7 +17,7 @@ namespace GeeksForLess_test.HtmlHelpers
     public static class MenuLinkMaker
     {
         public static MvcHtmlString MenuLink(this HtmlHelper htmlHelper, string linkText, string actionName,
-            string controllerName, string activeClass, string[] classes = null)
+            string controllerName, string activeClass, string[] classes = null, string id = "")
         {
             string currentAction = htmlHelper.ViewContext.RouteData.GetRequiredString("Action");
             string currentController = htmlHelper.ViewContext.RouteData.GetRequiredString("Controller");
@@ -32,7 +32,7 @@ namespace GeeksForLess_test.HtmlHelpers
 
             return htmlHelper.RawActionLink(linkText, actionName, controllerName, null,
                     new { @class = ((classes != null ? string.Join(" ", classes) : "") + 
-                    (isActive.Equals(true) ? ' ' + activeClass : ""))});
+                    (isActive.Equals(true) ? ' ' + activeClass : "")), @id = id});
         }
     }
 }

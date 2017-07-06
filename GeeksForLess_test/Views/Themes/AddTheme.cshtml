@@ -1,0 +1,52 @@
+﻿@model GeeksForLess_test.Models.AddThemeViewModel
+@{
+    ViewBag.Title = "Добавить тему";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <section id="loginForm" class="col-md-8 mb-3">
+        <h4 class="part-title">Новая тема</h4>
+        @using (Html.BeginForm("AddTheme", "Themes", new { ReturnUrl = ViewBag.ReturnUrl }, 
+            FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+
+            <div class="card">
+                <div class="p-a-1">
+                    <div class="form-group">
+                        <div class="">
+                            @Html.DropDownListFor(m => m.MainThemeId, Model.MainTheme, new { @class = "form-control", @placeholder = "Главная тема" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="">
+                            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @placeholder = "Название" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="">
+                            @Html.TextAreaFor(m => m.Text, new { @class = "form-control message-text-area text-area", @placeholder = "Текст" })
+                        </div>
+                    </div>
+                </div>
+                <div class="text-right self-align-right pl-3 pr-3 mb-3">
+                    <div class="">
+                        <button type="submit" class="btn btn-primary"><i class='fa fa-paper-plane-o' aria-hidden='true'></i> Опубликовать</button>
+                    </div>
+                    @*Html.RawActionLink("<i class='fa fa-paper-plane-o' aria-hidden='true'></i> Опубликовать",
+            "AddTheme", "Themes", null, new { @class = "btn btn-primary" })*@
+                </div>
+            </div>
+        }
+    </section>
+    <div class="col-md-4 themes-popular">
+        <h4 class="part-title">Популярные:</h4>
+        @{Html.RenderAction("_PopularThemes", "Themes");}
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

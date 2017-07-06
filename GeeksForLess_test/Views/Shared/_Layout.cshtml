@@ -1,46 +1,67 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title – приложение ASP.NET</title>
+    <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
 
 </head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+@{
+    string currentAction = ViewContext.RouteData.GetRequiredString("Action");
+    string currentController = ViewContext.RouteData.GetRequiredString("Controller");
+    bool isMainPage = false;
+
+    if (String.Equals("Index",
+        currentAction, StringComparison.OrdinalIgnoreCase)
+        && String.Equals("Home", currentController, StringComparison.OrdinalIgnoreCase))
+    {
+        isMainPage = true;
+    }
+    var navBrandLinkController = User.Identity.IsAuthenticated ? "Themes" : "Home";
+}
+<body class='@((User.Identity.IsAuthenticated && (User.Identity.IsAuthenticated && !isMainPage)) ? "" : "hello-page not-authorized")'>
+    <div class="navbar navbar-toggleable-md navbar-light bg-faded fixed-top header">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Имя приложения", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <button type="button" class="navbar-toggler navbar-toggler-right" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                }
+                @Html.ActionLink("GFSForum", "Index", navBrandLinkController, new { area = "" }, new { @class = "navbar-brand" })
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Домашняя страница", "Index", "Home")</li>
-                    <li>@Html.ActionLink("О программе", "About", "Home")</li>
-                    <li>@Html.ActionLink("Контакт", "Contact", "Home")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
-            </div>
+            @if (User.Identity.IsAuthenticated || !isMainPage)
+            {
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav mr-auto">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">@Html.MenuLink("О нас", "About", "Home", "active", new string[] { "nav-link" })</li>
+                            <li class="nav-item">@Html.MenuLink("Контакт", "Contact", "Home", "active", new string[] { "nav-link" })</li>
+                        }
+                    </ul>
+                    @if (!isMainPage)
+                    {
+                        @Html.Partial("_LoginPartial")
+                    }
+                </div>
+            }
         </div>
     </div>
-    <div class="container body-content">
+    <div class="container body-content mx-auto">
         @RenderBody()
-        <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year – приложение ASP.NET</p>
+            <p>&copy; @DateTime.Now.Year - GFSForum</p>
         </footer>
     </div>
 
     @Styles.Render("~/Content/less")
     @Styles.Render("~/Content/font-awesome")
-    @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/Core")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)

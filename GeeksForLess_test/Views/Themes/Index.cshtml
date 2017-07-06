@@ -1,0 +1,16 @@
+﻿@model IEnumerable<GeeksForLess_test.Models.ThemeModel>
+@{
+    ViewBag.Title = "Темы";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-9">
+        @Html.Partial("_Themes", Model)
+    </div>
+    <div class="col-md-3 themes-popular">
+        <h4 class="part-title">Популярные:</h4>
+        @{Html.RenderAction("_PopularThemes", "Themes");}
+    </div>
+</div>
+

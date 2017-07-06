@@ -51,6 +51,7 @@
           <Property Name="Email" Type="nvarchar" MaxLength="256" />
           <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
           <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="Gender" Type="bit" />
           <Property Name="SecurityStamp" Type="nvarchar(max)" />
           <Property Name="PhoneNumber" Type="nvarchar(max)" />
           <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
@@ -90,7 +91,9 @@
           <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="Author" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Text" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Main_theme" Type="bigint" />
+          <Property Name="Publication_date" Type="datetime2" Precision="7" />
         </EntityType>
         <EntityType Name="Themes_messages">
           <Key>
@@ -100,6 +103,8 @@
           <Property Name="Theme" Type="bigint" Nullable="false" />
           <Property Name="Author" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Reply_to" Type="bigint" />
+          <Property Name="Text" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Publication_date" Type="datetime2" Precision="7" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
@@ -170,7 +175,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Likes_Users">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Likes" Type="Self.Likes" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
@@ -182,7 +189,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Themes_messages_Themes">
-          <End Role="Themes" Type="Self.Themes" Multiplicity="1" />
+          <End Role="Themes" Type="Self.Themes" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Themes_messages" Type="Self.Themes_messages" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Themes">
@@ -205,18 +214,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Themes_messages_Users">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
-          <End Role="Themes_messages" Type="Self.Themes_messages" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Themes_messages">
-              <PropertyRef Name="Author" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Themes_Themes">
           <End Role="Themes" Type="Self.Themes" Multiplicity="0..1" />
           <End Role="Themes1" Type="Self.Themes" Multiplicity="*" />
@@ -230,7 +227,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Themes_Users">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Themes" Type="Self.Themes" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
@@ -283,10 +282,6 @@
           <AssociationSet Name="FK_Themes_messages_Themes_messages" Association="Self.FK_Themes_messages_Themes_messages">
             <End Role="Themes_messages" EntitySet="Themes_messages" />
             <End Role="Themes_messages1" EntitySet="Themes_messages" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Themes_messages_Users" Association="Self.FK_Themes_messages_Users">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Themes_messages" EntitySet="Themes_messages" />
           </AssociationSet>
           <AssociationSet Name="FK_Themes_Themes" Association="Self.FK_Themes_Themes">
             <End Role="Themes" EntitySet="Themes" />
@@ -420,6 +415,8 @@
           <NavigationProperty Name="Themes1" Relationship="GeeksForLessTestDBModel.FK_Themes_Themes" FromRole="Themes" ToRole="Themes1" />
           <NavigationProperty Name="Themes2" Relationship="GeeksForLessTestDBModel.FK_Themes_Themes" FromRole="Themes1" ToRole="Themes" />
           <NavigationProperty Name="AspNetUsers" Relationship="GeeksForLessTestDBModel.FK_Themes_Users" FromRole="Themes" ToRole="AspNetUsers" />
+          <Property Name="Text" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Publication_date" Type="DateTime" Precision="7" />
         </EntityType>
         <EntityType Name="Themes_messages">
           <Key>
@@ -433,6 +430,8 @@
           <NavigationProperty Name="Themes_messages1" Relationship="GeeksForLessTestDBModel.FK_Themes_messages_Themes_messages" FromRole="Themes_messages" ToRole="Themes_messages1" />
           <NavigationProperty Name="Themes_messages2" Relationship="GeeksForLessTestDBModel.FK_Themes_messages_Themes_messages" FromRole="Themes_messages1" ToRole="Themes_messages" />
           <NavigationProperty Name="AspNetUsers" Relationship="GeeksForLessTestDBModel.FK_Themes_messages_Users" FromRole="Themes_messages" ToRole="AspNetUsers" />
+          <Property Name="Text" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Publication_date" Type="DateTime" Precision="7" />
         </EntityType>
         <Association Name="FK_Likes_Likes_types">
           <End Type="GeeksForLessTestDBModel.Likes_targets" Role="Likes_targets" Multiplicity="1" />
@@ -507,6 +506,7 @@
           <NavigationProperty Name="Themes_messages" Relationship="GeeksForLessTestDBModel.FK_Themes_messages_Users" FromRole="AspNetUsers" ToRole="Themes_messages" />
           <NavigationProperty Name="Themes" Relationship="GeeksForLessTestDBModel.FK_Themes_Users" FromRole="AspNetUsers" ToRole="Themes" />
           <NavigationProperty Name="AspNetRoles" Relationship="GeeksForLessTestDBModel.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+          <Property Name="Gender" Type="Boolean" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Type="GeeksForLessTestDBModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
@@ -639,6 +639,8 @@
           <EntitySetMapping Name="Themes">
             <EntityTypeMapping TypeName="GeeksForLessTestDBModel.Themes">
               <MappingFragment StoreEntitySet="Themes">
+                <ScalarProperty Name="Publication_date" ColumnName="Publication_date" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
                 <ScalarProperty Name="Main_theme" ColumnName="Main_theme" />
                 <ScalarProperty Name="Author" ColumnName="Author" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -649,6 +651,8 @@
           <EntitySetMapping Name="Themes_messages">
             <EntityTypeMapping TypeName="GeeksForLessTestDBModel.Themes_messages">
               <MappingFragment StoreEntitySet="Themes_messages">
+                <ScalarProperty Name="Publication_date" ColumnName="Publication_date" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
                 <ScalarProperty Name="Reply_to" ColumnName="Reply_to" />
                 <ScalarProperty Name="Author" ColumnName="Author" />
                 <ScalarProperty Name="Theme" ColumnName="Theme" />
@@ -659,6 +663,7 @@
           <EntitySetMapping Name="AspNetUsers">
             <EntityTypeMapping TypeName="GeeksForLessTestDBModel.AspNetUsers">
               <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
                 <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
                 <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />

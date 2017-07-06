@@ -159,8 +159,10 @@ namespace GeeksForLess_test.Controllers
         {
             if (ModelState.IsValid)
             {
+                bool temp;
+                bool? gender = bool.TryParse(model.Gender, out temp) ? (bool?)temp : null;
                 var user = new ApplicationUser { UserName = model.NickName, Email = model.Email, Name = model.Name, Last_name = model.LastName,
-                    Avatar = model.Avatar};
+                    Avatar = model.Avatar, Gender = gender};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -172,7 +174,7 @@ namespace GeeksForLess_test.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Подтверждение учетной записи", "Подтвердите вашу учетную запись, щелкнув <a href=\"" + callbackUrl + "\">здесь</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Themes");
                 }
                 AddErrors(result);
             }

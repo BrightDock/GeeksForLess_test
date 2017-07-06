@@ -5,17 +5,18 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="11609dfb1a884f28b40fc227e4a4e0f1" Name="Diagram1" ZoomLevel="108">
-        <EntityTypeShape EntityType="GeeksForLessTestDBModel.AspNetRoles" Width="1.5" PointX="0.625" PointY="3" />
-        <EntityTypeShape EntityType="GeeksForLessTestDBModel.AspNetUserClaims" Width="1.5" PointX="4.375" PointY="3.125" />
+        <EntityTypeShape EntityType="GeeksForLessTestDBModel.AspNetRoles" Width="1.5" PointX="0.625" PointY="3.125" />
+        <EntityTypeShape EntityType="GeeksForLessTestDBModel.AspNetUserClaims" Width="1.5" PointX="4.375" PointY="3.375" />
         <EntityTypeShape EntityType="GeeksForLessTestDBModel.AspNetUserLogins" Width="1.5" PointX="4.375" PointY="1.125" />
-        <EntityTypeShape EntityType="GeeksForLessTestDBModel.Likes" Width="1.5" PointX="0.625" PointY="4.875" />
-        <EntityTypeShape EntityType="GeeksForLessTestDBModel.Likes_targets" Width="1.5" PointX="4.375" PointY="5.375" />
+        <EntityTypeShape EntityType="GeeksForLessTestDBModel.Likes" Width="1.5" PointX="0.625" PointY="5.125" />
+        <EntityTypeShape EntityType="GeeksForLessTestDBModel.Likes_targets" Width="1.5" PointX="4.375" PointY="5.875" />
         <EntityTypeShape EntityType="GeeksForLessTestDBModel.Options" Width="1.5" PointX="0.625" PointY="1.125" />
-        <EntityTypeShape EntityType="GeeksForLessTestDBModel.Themes" Width="1.5" PointX="6.25" PointY="4" />
+        <EntityTypeShape EntityType="GeeksForLessTestDBModel.Themes" Width="1.5" PointX="6.25" PointY="4.5" />
         <EntityTypeShape EntityType="GeeksForLessTestDBModel.Themes_messages" Width="1.5" PointX="6.25" PointY="1.125" />
         <AssociationConnector Association="GeeksForLessTestDBModel.FK_Likes_Likes_types" />
         <AssociationConnector Association="GeeksForLessTestDBModel.FK_Themes_messages_Themes" />
-        <AssociationConnector Association="GeeksForLessTestDBModel.FK_Themes_Themes" />
+        <AssociationConnector Association="GeeksForLessTestDBModel.FK_Themes_Themes" ManuallyRouted="false" >
+        </AssociationConnector>
         <AssociationConnector Association="GeeksForLessTestDBModel.FK_Themes_messages_Themes_messages" />
         <EntityTypeShape EntityType="GeeksForLessTestDBModel.AspNetUsers" Width="1.5" PointX="2.5" PointY="1.125" />
         <AssociationConnector Association="GeeksForLessTestDBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />

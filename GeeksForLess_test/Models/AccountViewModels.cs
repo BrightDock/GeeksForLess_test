@@ -70,6 +70,10 @@ namespace GeeksForLess_test.Models
         [Display(Name = "Фамилия")]
         public string LastName { get; set; }
 
+        [Display(Name = "Пол")]
+        [DataType(DataType.Text)]
+        public string Gender { get; set; }
+
         [Display(Name = "Ник")]
         public string NickName { get; set; }
 

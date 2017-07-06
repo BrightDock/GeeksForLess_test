@@ -1,0 +1,47 @@
+﻿@using GeeksForLess_test.Models
+@model CommentViewModel
+
+@using (Html.BeginForm("AddComment/", "Comments", new { ReturnUrl = ViewBag.ReturnUrl },
+    FormMethod.Post, new { @class = "form-horizontal mt-5 new-message", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="message-body card row flex-row mb-3 pt-3 pb-3 new-comment">
+        <h4 class="col-12 mb-4 part-title">Оставить комментарий</h4>
+        <div class="col pr-0 align-self-start">
+            <a href="/Account/?ID=@Model.Author.Id" class="message-author">
+                <div class="author-avatar rounded-circle">
+                    <img src='@(Model.Author.Avatar ?? "/Content/img/default_user.png")' class='rounded-circle' />
+                </div>
+            </a>
+        </div>
+        <div class="col-8 align-self-start">
+            <div class="message-text">
+                <span>
+                    @Html.TextAreaFor(m => m.Text, 3, 1, new
+               {
+                   @class = "col-12 pt-2 pb-2 pl-2 pr-2 message-text-area text-area",
+                   @placeholder = "Ваш текст..."
+               })
+                </span>
+            </div>
+            @Html.HiddenFor(m => m.Reply_to)
+            @Html.HiddenFor(m => m.Theme)
+            @Html.HiddenFor(m => m.Author)
+        </div>
+        <div class="addition-part row mx-auto col-sm-12 col-md mt-3 mb-2 pl-0 text-right justify-content-end align-self-end">
+            <div class="message-write message-addition">
+                <button type="submit" value="" class="btn-action btn-write" data-action="add" data-path="/Comments/AddComment/">
+                    <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+                    <span class="text-uppercase">Опубликовать</span>
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

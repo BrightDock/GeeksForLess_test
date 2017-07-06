@@ -10,19 +10,31 @@ namespace GeeksForLess_test.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Themes");
+            }
+            else
+            {
+                return View();
+            }
+        }
+
+        public ActionResult Themes()
+        {
+            return View("~/Views/Themes/Index.cshtml");
         }
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "GeeksForLess";
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "";
 
             return View();
         }

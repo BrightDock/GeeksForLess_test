@@ -22,6 +22,7 @@ namespace GeeksForLess_test
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
+                      "~/Scripts/tether/tether.min.js",
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 

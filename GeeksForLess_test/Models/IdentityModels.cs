@@ -12,6 +12,7 @@ namespace GeeksForLess_test.Models
         public string Name { get; set; }
         public string Last_name { get; set; }
         public string Avatar { get; set; }
+        public bool? Gender { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
@@ -19,6 +20,7 @@ namespace GeeksForLess_test.Models
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
             // Здесь добавьте утверждения пользователя
             userIdentity.AddClaim(new Claim("Name", this.Name.ToString()));
+            userIdentity.AddClaim(new Claim("Id", this.Id));
             return userIdentity;
         }
     }

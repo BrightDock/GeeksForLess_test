@@ -1,0 +1,32 @@
+﻿@model IEnumerable<GeeksForLess_test.Models.ThemeModel>
+@using PagedList.Mvc;
+
+@{ 
+    var themes = Model.OrderByDescending(theme => theme.Likes.Count()).AsEnumerable();
+}
+
+@foreach (var theme in themes)
+{
+    <div class="popular-theme">
+        <div class="popular-theme-name">
+            <a href="/Themes/GetTheme/?ID=@theme.Theme.Id"><h5>@theme.Theme.Name</h5></a>
+        </div>
+        <div class="popular-theme-text">
+            @theme.Theme.Text
+        </div>
+        <a href="/Themes/GetTheme/?ID=@theme.Theme.Id" class="popular-theme-additions row mx-auto col pt-3 text-right justify-content-end">
+            <div class="theme-messages-count addition-part">
+                <i class="fa fa-comments-o" aria-hidden="true"></i>
+                <span>@theme.Messages.Count()</span>
+            </div>
+            <div class="theme-likes-count addition-part 
+                 @(theme.Likes.FirstOrDefault(m => m.AspNetUsers.UserName == User.Identity.Name) != null ? "liked" : "")">
+                <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                <span>@theme.Likes.Count()</span>
+            </div>
+            <div class="theme-read-all-count addition-part">
+                <span class="text-uppercase h6">Читать далее</span>
+            </div>
+        </a>
+    </div>
+}

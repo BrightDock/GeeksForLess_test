@@ -1,0 +1,102 @@
+﻿@model GeeksForLess_test.Models.ThemeMessagesModel
+
+@{
+    ViewBag.Title = Model.Theme.Name;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!--       Theme header         -->
+
+<div class="container mx-auto theme-title mb-4 row one-theme-show pl-3 pr-2 justify-content-start p-a-1 part-title">
+    <i class="fa fa-question-circle-o title-icon mr-3" aria-hidden="true"></i>
+    <div>
+        <p class="lead h5">@Model.Theme.Name</p>
+        <div class="theme-additions row text-left justify-content-start pl-3 pr-3 mr-3">
+            <div class="theme-messages-count addition-part">
+                <button class="btn-action">
+                    <i class="fa fa-comments-o" aria-hidden="true"></i>
+                    <span>@Model.MessagesLikes.Count()</span>
+                </button>
+            </div>
+            @{Html.RenderPartial("_LikesPart",
+                    new Tuple<IEnumerable<GeeksForLess_test.Models.Likes>, long>(Model.Likes, Model.Theme.Id)); }
+        </div>
+    </div>
+    @if (Model.Theme.AspNetUsers.UserName == User.Identity.Name)
+    {
+        <a href="/Themes/RemoveTheme/?ID=@Model.Theme.Id" class="delete-icon theme-action-buttons" role="button" title="Удалить">
+            <i class="fa fa-times" aria-hidden="true"></i>
+        </a>
+        <a href="/Themes/ChangeTheme/?ID=@Model.Theme.Id" id="changeTheme" class="change-icon theme-action-buttons" role="button" title="Изменить">
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+        </a>
+    }
+</div>
+
+<!--       Theme body         -->
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="col theme mb-4 one-theme-show">
+            <div class="row theme-main">
+                <div class="col-2 align-self-start">
+                    <a href="/Account/?ID=@Model.Theme.AspNetUsers.Id" class="theme-author">
+                        <div class="author-avatar img-thumbnail rounded-circle">
+                            <img src='@(Model.Theme.AspNetUsers.Avatar ?? "/Content/img/default_user.png")' class='rounded-circle' />
+                        </div>
+                        <div class="theme-author text-center mt-2">
+                            <h5>@Model.Theme.AspNetUsers.Name</h5>
+                        </div>
+                    </a>
+                </div>
+                <div class="theme-body theme-all card p-a-1 col-10 align-self-start">
+                    <div class="theme-head row">
+                        <div class="theme-publication-date text-left col pb-2 mb-2">
+                            <p class="mb-0"><i class="fa fa-clock-o" aria-hidden="true"></i> @Model.Theme.Publication_date.Value.ToString("dd.MM.yyyy - H:mm")</p>
+                        </div>
+                    </div>
+                    <div class="theme-text">
+                        <span>@Model.Theme.Text</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--     Theme messages       -->
+        <hr />
+        <div class="col theme-messages">
+            @{
+                ViewBag.Theme = Model.Theme;
+            }
+            @Html.Partial("Messages", Model.MessagesLikes)
+        </div>
+    </div>
+
+    <!--      Popular themes      -->
+
+    <div class="col-md-4 themes-popular">
+        <h4 class="part-title">Популярные:</h4>
+        @Html.Action("_PopularThemes", "Themes")
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                <button type="button" class="btn btn-primary"><i class='fa fa-floppy-o mr-2' aria-hidden='true'></i> Сохранить</button>
+            </div>
+        </div>
+    </div>
+</div>

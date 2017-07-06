@@ -1,0 +1,52 @@
+﻿@model PagedList.IPagedList<GeeksForLess_test.Models.ThemeModel>
+@using PagedList.Mvc;
+
+<h4 class="part-title">Свободные темы</h4>
+@foreach (var theme in Model)
+{
+    <div class="theme mb-3 col">
+        <div class="row theme-main">
+            <a href="/Account/?ID=@theme.Theme.AspNetUsers.Id" class="theme-author col-2 align-self-start">
+                <div class="author-avatar img-thumbnail rounded-circle">
+                    <img src='@(theme.Theme.AspNetUsers.Avatar ?? "/Content/img/default_user.png")' class='rounded-circle' />
+                </div>
+                <div class="theme-author text-center mt-2">
+                    <h5>@theme.Theme.AspNetUsers.Name</h5>
+                </div>
+            </a>
+            <div class="theme-body card p-a-1 col-10">
+                <div class="theme-head row pb-1 mb-2">
+                    <div class="theme-title col-sm-12 col-md-9">
+                        <a href="/Themes/GetTheme/?ID=@theme.Theme.Id">
+                            <h4>@theme.Theme.Name</h4>
+                        </a>
+                    </div>
+                    <div class="theme-publication-date col-sm-12 col-md-3 text-right">
+                        <p class="">@theme.Theme.Publication_date.Value.ToString("dd.MM.yyyy - H:m")</p>
+                    </div>
+                </div>
+                <div class="theme-text">
+                    <span>@theme.Theme.Text</span>
+                </div>
+                <a href="/Themes/GetTheme/?ID=@theme.Theme.Id" class="theme-additions row pt-3 mt-3 text-right justify-content-end">
+                    <div class="theme-messages-count addition-part">
+                        <i class="fa fa-comments-o" aria-hidden="true"></i>
+                        <span>@theme.Messages.Count()</span>
+                    </div>
+                    <div class="theme-likes-count addition-part 
+                         @(theme.Likes.FirstOrDefault(m => m.AspNetUsers.UserName == User.Identity.Name) != null ? "liked" : "")">
+                        <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                        <span>@theme.Likes.Count()</span>
+                    </div>
+                    <div class="theme-read-all-count addition-part">
+                        <span class="text-uppercase h6">Читать далее</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="pagi text-center">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), PagedListRenderOptions.OnlyShowFivePagesAtATime)
+</div>

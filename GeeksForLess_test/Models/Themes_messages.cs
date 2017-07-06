@@ -24,6 +24,8 @@ namespace GeeksForLess_test.Models
         public long Theme { get; set; }
         public string Author { get; set; }
         public Nullable<long> Reply_to { get; set; }
+        public string Text { get; set; }
+        public Nullable<System.DateTime> Publication_date { get; set; }
     
         public virtual Themes Themes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
