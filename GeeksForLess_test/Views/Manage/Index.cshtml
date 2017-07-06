@@ -7,8 +7,8 @@
 <div>
     <h4 class="part-title">Изменение параметров учетной записи</h4>
     <dl class="dl-horizontal">
-        <dt>Пароль:</dt>
-        <dd>
+        <dt class="h6">Пароль:</dt>
+        <dd class="h6">
             [
             @if (Model.HasPassword)
             {
@@ -19,12 +19,12 @@
                 @Html.ActionLink("Создать", "SetPassword")
             }
             ]
-        </dd>
-        <dt>Внешние имена входа:</dt>
+        </ddclass="h6">
+        @*<dt>Внешние имена входа:</dt>
         <dd>
             @Model.Logins.Count [
             @Html.ActionLink("Управление", "ManageLogins") ]
-        </dd>
+        </dd>*@
         @*
             Номера телефонов можно использовать в качестве второго проверочного фактора для системы двухфакторной проверки подлинности.
 
@@ -53,12 +53,12 @@
                 }
             </dd>
         *@
-        <dt>Двухфакторная проверка подлинности:</dt>
+        @*<dt>Двухфакторная проверка подлинности:</dt>
         <dd>
             <p>
                 Поставщики двухфакторной проверки подлинности не настроены. В <a href="http://go.microsoft.com/fwlink/?LinkId=403804">этой статье</a>
                 вы можете узнать, как настроить двухфакторную проверку подлинности в этом приложении ASP.NET.
-            </p>
+            </p>*@
             @*@if (Model.TwoFactor)
                 {
                     using (Html.BeginForm("DisableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
