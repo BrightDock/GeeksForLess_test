@@ -66,23 +66,30 @@ namespace GeeksForLess_test.Controllers
 
         [Authorize]
         [HttpGet]
-        public ActionResult ChangeComment(long? ID, string returnUrl)
+        public ActionResult ChangeComment(long? ID)
         {
+            var returnUrl = Request.UrlReferrer.LocalPath;
             if (ID.HasValue) {
                 var db = new GeeksForLessTestDBEntities();
                 var messageRepeatTo = new ChangeCommentViewModel();
-                var message = db.Themes_messages.FirstOrDefault(m => m.Id == ID);
+                var message = db.Themes_messages.FirstOrDefault(m => m.Id == ID.Value);
 
                 messageRepeatTo.Message = message;
                 messageRepeatTo.ReplyToList = new List<SelectListItem>() {
                 new SelectListItem() { Text = "Выбрать ответ", Value = "null", Selected = true } };
                 messageRepeatTo.ReplyToList = messageRepeatTo.ReplyToList.Concat(db.Themes_messages
-                    .Where(m => m.Id != ID && m.Theme == message.Theme && m.Publication_date < message.Publication_date)
+                    .Where(m => m.Id != ID.Value && m.Theme == message.Theme && m.Publication_date < message.Publication_date)
                     .Select(rTo => new SelectListItem() {
                         Text = rTo.Text,
                         Value = rTo.Id.ToString(),
                         Selected = message.Reply_to == rTo.Id ? true : false
                     }));
+                if (messageRepeatTo.ReplyToList.Where(m => m.Selected == true).ToList().Count > 1)
+                {
+                    messageRepeatTo.ReplyToList.First().Selected = false;
+                    messageRepeatTo.ReplyToId = int.Parse(messageRepeatTo.ReplyToList.Last().Value);
+                }
+                messageRepeatTo.Id = ID.Value;
 
                 ViewBag.ReturnUrl = returnUrl;
                 return PartialView(messageRepeatTo);
@@ -94,25 +101,36 @@ namespace GeeksForLess_test.Controllers
         [HttpPost]
         public ActionResult ChangeComment(ChangeCommentViewModel model, string returnUrl)
         {
-            if (!ModelState.IsValid)
+            if (model == null || !model.Id.HasValue)
             {
                 return RedirectToLocal(returnUrl);
             }
 
-            Themes_messages Comment;
             var db = new GeeksForLessTestDBEntities();
-            Comment = db.Themes_messages.Find(model.Message.Id);
-            var ReplyTo = db.Themes.Find(model.ReplyToId.Id);
+
+            var Comment = db.Themes_messages.FirstOrDefault(m => m.Id == model.Id.Value);
 
             if (Comment != null)
             {
-                Comment.Reply_to = ReplyTo.Id;
+                Comment.Reply_to = model.ReplyToId;
                 Comment.Text = model.Message.Text;
             }
-
             db.SaveChanges();
 
-            return PartialView(Comment);
+
+            var theme = Comment.Themes;
+            var Messages = db.Themes_messages.Where(themeMessage => themeMessage.Theme == theme.Id);
+            var MessageLikes = new List<CommentLikesView>();
+            foreach (var message in Messages)
+            {
+                var Likes = db.Likes.Where(Like => Like.Target == message.Id/* && Like.Target_type == 1*/);
+                MessageLikes.Add(new CommentLikesView() { Comment = message, Likes = Likes });
+            }
+
+            ViewBag.ReturnUrl = returnUrl;
+            ViewBag.user = db.AspNetUsers.Where(u => u.UserName == User.Identity.Name).FirstOrDefault();
+            ViewBag.Theme = theme;
+            return PartialView("Messages", MessageLikes);
         }
 
         public async Task<ActionResult> RemoveComment(long? ID)
@@ -134,7 +152,7 @@ namespace GeeksForLess_test.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Themes");
+            return RedirectToAction("Index", "Home");
         }
     }
 }

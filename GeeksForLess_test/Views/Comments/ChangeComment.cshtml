@@ -1,6 +1,7 @@
 ﻿@using GeeksForLess_test.Models
 @model ChangeCommentViewModel
 
+@ViewBag.messagesCount
 
 @if (Model != null)
 {
@@ -8,26 +9,27 @@
     {
         if (User.Identity.IsAuthenticated)
         {
-            using (Html.BeginForm("ChangeComment", "Comments", new{ ReturnUrl = ViewBag.ReturnUrl },
+            using (Html.BeginForm("ChangeComment", "Comments", new { ReturnUrl = ViewBag.ReturnUrl },
                 FormMethod.Post, new { @class = "form-horizontal new-message", role = "form", id = "change-message-form" }))
             {
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
                 if (Model.ReplyToList != null || Model.ReplyToList.Count() != 0)
                 {
-                @Html.LabelFor(m => m.ReplyToList)
-                @Html.DropDownListFor(m => m.ReplyToId, Model.ReplyToList, new
-                {
-                    @class = "col-12 pt-2 pb-2 pl-2 pr-2"
-                })
-            }
+                    @Html.LabelFor(m => m.ReplyToList)
+                    @Html.DropDownListFor(m => m.ReplyToId, Model.ReplyToList, new
+                    {
+                        @class = "col-12 pt-2 pb-2 pl-2 pr-2"
+                    })
+                }
 
-            @Html.LabelFor(m => m.Message, new { @class = "mt-3" })
-            @Html.TextAreaFor(m => Model.Message.Text, 3, 1, new
-       {
-           @class = "col-12 pt-2 pb-2 pl-2 pr-2 message-text-area text-area",
-           @placeholder = "Ваш текст..."
-       })
+                @Html.LabelFor(m => m.Message, new { @class = "mt-3" })
+                @Html.TextAreaFor(m => Model.Message.Text, 3, 1, new
+                {
+                    @class = "col-12 pt-2 pb-2 pl-2 pr-2 message-text-area text-area",
+                    @placeholder = "Ваш текст..."
+                })
+                @Html.HiddenFor(m => m.Id)
             }
         }
         else
@@ -35,19 +37,22 @@
 
         }
     }
-    catch (Exception ex) {
+    catch (Exception ex)
+    {
         <p>@ex</p>
     }
 
     <script type="text/javascript">
         var modalButton = $('.modal-submit-button');
+        var modal = $('.modal');
         var form = $('#change-message-form');
 
-        modalButton.attr('form', form.attr('id'));
-/*
-        modal.click(function () {
-            form.submit();
-        });*/
+//        modalButton.attr('form', form.attr('id'));
+
+        modalButton.click(function () {
+            modalButton.off();
+            sendAjax(form.attr('action'), form, $('.theme-messages'));
+        });
     </script>
 
     @section Scripts {

@@ -591,9 +591,29 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill{
 }
 
 .new-message{
+    .new-comment-avatar-wrapper{
+        padding-right: 0;
+    }
+
     .message-body{
         .part-title{
             border-color: #eee;
+        }
+    }
+
+    .reply-to-label{
+        position: absolute;
+        top: .75rem;
+        right: 1rem;
+        font-size: 1.1rem;
+        padding: .5rem;
+        border-radius: .15em;
+        cursor: pointer;
+        .transition(all, .2s, ease);
+
+        &:hover {
+            background-color: #f3f3f3;
+            color: #8a8a8a;
         }
     }
 
@@ -647,6 +667,20 @@ footer {
 
         i{
             margin: 0;
+        }
+    }
+
+    .new-message{
+        .new-comment-avatar-wrapper{
+            padding-right: 15px;
+            margin-bottom: 1rem;
+        }
+
+        .reply-to-label{
+            top: auto;
+            bottom: .5rem;
+            right: auto;
+            left: 1rem;
         }
     }
 }

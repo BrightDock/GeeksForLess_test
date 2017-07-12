@@ -22,13 +22,15 @@ namespace GeeksForLess_test.Models
 
     public class ChangeCommentViewModel
     {
+        public long? Id { get; set; }
+
         [Required]
         [Display(Name = "Текст сообщения")]
         public Themes_messages Message { get; set; }
 
         public string ReturnUrl { get; set; }
 
-        public Themes_messages ReplyToId { get; set; }
+        public long? ReplyToId { get; set; }
 
         [Required]
         [Display(Name = "Ответ к")]

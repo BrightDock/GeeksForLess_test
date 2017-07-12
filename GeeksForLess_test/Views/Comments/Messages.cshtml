@@ -88,6 +88,7 @@ else
 
 @{
     ViewBag.U = ViewBag.user;
-    var theme = (GeeksForLess_test.Models.Themes)ViewBag.Theme;
+    var theme = ViewBag.Theme;
+
     Html.RenderAction("AddComment", "Comments", new { ID = theme.Id });
 }

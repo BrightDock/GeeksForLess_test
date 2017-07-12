@@ -48,7 +48,7 @@ function changeWindowHeight() {
 }
 
 
-/*      Text autosize helper        */
+/*      Text autosize height        */
 
 function textAreaAutosize(selector) {
     this.txt = $(selector);
@@ -116,9 +116,7 @@ $('#Modal').on('show.bs.modal', function (event) {
             TAAutosize.update();
         },
         error: function (xhr, status, p3) {
-            form.classList.add('is-error');
-            form.classList.remove('is-uploading');
-            errorMsg.textContent = xhr.responseText;
+
         }
     });
 });
@@ -129,8 +127,46 @@ $('.btn-reply').click(function () {
     var button = $(this);
     var newComment = $('.new-comment');
     var ReplyTo = $('#Reply_to');
+    var ReplyToLabel = $('.reply-to-label') == undefined ? $('.reply-to-label') : $(document.createElement('label'));
+    ReplyToLabel.addClass('reply-to-label');
+    ReplyToLabel.attr('title', 'Отменить');
+    newComment.append(ReplyToLabel);
     
-    ReplyTo.text(button.data('target'));
-    newComment.find('textarea').text('#'+button.data('target') + ', ');
+    $('html, body').animate({
+        scrollTop: newComment.offset().top + ($(window).innerWidth() > 544 ? newComment.innerHeight() : -60)
+    }, 500);
+
+    ReplyTo.val(button.data('target'));
+    ReplyToLabel.html('<i class="fa fa-reply-all mr-2" aria-hidden="true"></i>#' + button.data('target'));
     newComment.find('textarea').focus();
+
+    ReplyToLabel.click(function () {
+        ReplyTo.val('');
+        $(this).remove();
+    });
 });
+
+function sendAjax(url, form, resultBlock) {
+    var data = $(form).serialize();
+
+    modal.find('.modal-body').empty();
+    modal.find('.modal-body').html('<div class="progress">' +
+        '<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"' +
+        'aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div></div>');
+
+    $.ajax({
+        type: 'POST',
+        url: url,
+        data: data,
+        success: function (result) {
+            $(resultBlock).html(result);
+            modal.modal('hide');
+            modal.find('.modal-body').empty();
+        },
+        error: function (xhr, str) {
+//            alert('Возникла ошибка: ' + xhr.responseCode);
+            modal.modal('hide');
+            modal.find('.modal-body').empty();
+        }
+    });
+}

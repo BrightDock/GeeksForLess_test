@@ -1,7 +1,7 @@
 ﻿@using GeeksForLess_test.Models
 @model CommentViewModel
 
-@using (Html.BeginForm("AddComment/", "Comments", new { ReturnUrl = ViewBag.ReturnUrl },
+@using (Html.BeginForm("AddComment", "Comments", new { ReturnUrl = ViewBag.ReturnUrl },
     FormMethod.Post, new { @class = "form-horizontal mt-5 new-message", role = "form" }))
 {
     @Html.AntiForgeryToken()
@@ -9,14 +9,14 @@
 
     <div class="message-body card row flex-row mb-3 pt-3 pb-3 new-comment">
         <h4 class="col-12 mb-4 part-title">Оставить комментарий</h4>
-        <div class="col pr-0 align-self-start">
+        <div class="col col-sm-0 hidden-sm-down align-self-start new-comment-avatar-wrapper">
             <a href="/Account/?ID=@Model.Author.Id" class="message-author">
                 <div class="author-avatar rounded-circle">
                     <img src='@(Model.Author.Avatar ?? "/Content/img/default_user.png")' class='rounded-circle' />
                 </div>
             </a>
         </div>
-        <div class="col-8 align-self-start">
+        <div class="col-sm-12 col-md-8 align-self-start">
             <div class="message-text">
                 <span>
                     @Html.TextAreaFor(m => m.Text, 3, 1, new
@@ -26,7 +26,7 @@
                })
                 </span>
             </div>
-            @Html.HiddenFor(m => m.Reply_to)
+            @Html.HiddenFor(m => m.Reply_to, new { @class = "hidden" })
             @Html.HiddenFor(m => m.Theme)
         </div>
         <div class="addition-part row mx-auto col-sm-12 col-md mt-3 mb-2 pl-0 text-right justify-content-end align-self-end">

@@ -68,7 +68,7 @@
             @{
                 ViewBag.Theme = Model.Theme;
             }
-            @Html.Partial("Messages", Model.MessagesLikes)
+            @Html.Partial("~/Views/Comments/Messages.cshtml", Model.MessagesLikes)
         </div>
     </div>
 

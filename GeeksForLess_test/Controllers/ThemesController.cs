@@ -51,7 +51,6 @@ namespace GeeksForLess_test.Controllers
             }
 
             ViewBag.user = db.AspNetUsers.Where(u => u.UserName == User.Identity.Name).FirstOrDefault();
-
             var themeThemeMessage = new ThemeMessagesModel() { Theme = theme, MessagesLikes = MessageLikes, Likes = likes };
             return View(themeThemeMessage);
             
@@ -99,22 +98,24 @@ namespace GeeksForLess_test.Controllers
                 return View(model);
             }
 
-            var db = new GeeksForLessTestDBEntities();
-            long temp;
-            long.TryParse(model.MainThemeId, out temp);
-            string authorID = db.AspNetUsers.Where(user => user.UserName == User.Identity.Name).FirstOrDefault().Id;
-            var theme = new Themes
+            using (var db = new GeeksForLessTestDBEntities())
             {
-                Name = model.Name,
-                Text = model.Text,
-                Main_theme = temp == 0 ? null : (long?)temp,
-                Publication_date = DateTime.Now,
-                Author = authorID
-            };
+                long temp;
+                long.TryParse(model.MainThemeId, out temp);
+                string authorID = db.AspNetUsers.Where(user => user.UserName == User.Identity.Name).FirstOrDefault().Id;
+                var theme = new Themes
+                {
+                    Name = model.Name,
+                    Text = model.Text,
+                    Main_theme = temp == 0 ? null : (long?)temp,
+                    Publication_date = DateTime.Now,
+                    Author = authorID
+                };
 
-            db.Themes.Add(theme);
-            await db.SaveChangesAsync();
-            return RedirectToAction("GetTheme", "Themes", new { ID = theme.Id });
+                db.Themes.Add(theme);
+                await db.SaveChangesAsync();
+                return RedirectToAction("GetTheme", "Themes", new { ID = theme.Id });
+            }
         }
 
         [Authorize]
