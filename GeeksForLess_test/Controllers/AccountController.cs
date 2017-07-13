@@ -53,6 +53,7 @@ namespace GeeksForLess_test.Controllers
         }
 
         [Authorize]
+        [HttpGet]
         public ActionResult Index(string ID) {
             if (string.IsNullOrEmpty(ID)) {
                 return RedirectToAction("Index", "Themes");
