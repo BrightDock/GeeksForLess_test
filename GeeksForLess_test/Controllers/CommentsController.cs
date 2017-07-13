@@ -37,6 +37,7 @@ namespace GeeksForLess_test.Controllers
 
         [Authorize]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> AddComment(CommentViewModel model)
         {
 //            ViewBag.str = model.Reply_to + ' ' + model.Text + ' ' + model.Theme + ' ' + model.Author.Id;
@@ -99,6 +100,7 @@ namespace GeeksForLess_test.Controllers
 
         [Authorize]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> ChangeComment(ChangeCommentViewModel model, string returnUrl)
         {
             if (model == null || !model.Id.HasValue)
@@ -107,7 +109,6 @@ namespace GeeksForLess_test.Controllers
             }
 
             var db = new GeeksForLessTestDBEntities();
-
             var Comment = db.Themes_messages.FirstOrDefault(m => m.Id == model.Id.Value);
 
             if (Comment != null)

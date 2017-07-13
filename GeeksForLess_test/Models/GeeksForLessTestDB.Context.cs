@@ -34,5 +34,7 @@ namespace GeeksForLess_test.Models
         public virtual DbSet<Themes> Themes { get; set; }
         public virtual DbSet<Themes_messages> Themes_messages { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
+
+        public System.Data.Entity.DbSet<GeeksForLess_test.Models.ChangeThemeViewModel> ChangeThemeViewModels { get; set; }
     }
 }

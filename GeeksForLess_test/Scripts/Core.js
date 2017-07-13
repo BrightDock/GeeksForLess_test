@@ -127,7 +127,7 @@ $('.btn-reply').click(function () {
     var button = $(this);
     var newComment = $('.new-comment');
     var ReplyTo = $('#Reply_to');
-    var ReplyToLabel = $('.reply-to-label') == undefined ? $('.reply-to-label') : $(document.createElement('label'));
+    var ReplyToLabel = $('.reply-to-label') == null ? $('.reply-to-label') : $(document.createElement('label'));
     ReplyToLabel.addClass('reply-to-label');
     ReplyToLabel.attr('title', 'Отменить');
     newComment.append(ReplyToLabel);

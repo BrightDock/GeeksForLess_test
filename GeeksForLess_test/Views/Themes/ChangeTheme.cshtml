@@ -7,32 +7,50 @@
 <div class="row">
     <section id="loginForm" class="col-md-8 mb-3">
         <h4 class="part-title">@ViewBag.Title</h4>
-        @using (Html.BeginForm("AddTheme", "Themes", new { ReturnUrl = ViewBag.ReturnUrl }, 
+        @using (Html.BeginForm("ChangeTheme/" + Model.Id, "Themes", new { ReturnUrl = ViewBag.ReturnUrl }, 
             FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
         {
             @Html.AntiForgeryToken()
-            @Html.ValidationSummary("", new { @class = "text-danger" })
-            @Html.HiddenFor(m => m.Id)
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
 
             <div class="card">
                 <div class="p-a-1">
                     <div class="form-group">
                         @Html.LabelFor(m => m.MainTheme, new { @class = "" })
                         <div class="">
-                            @Html.DropDownListFor(m => m.MainThemeId, Model.MainTheme, new { @class = "form-control", @placeholder = "Главная тема" })
+                            @Html.DropDownListFor(m => m.MainThemeId, Model.MainTheme, new{
+                                @class = "form-control",
+                                @placeholder = "Главная тема",
+                                @id = Html.IdFor(m => m.MainThemeId),
+                                @name = Html.IdFor(m => m.MainThemeId)
+                            })
                         </div>
+                        @Html.ValidationMessageFor(model => model.MainThemeId, "", new { @class = "text-danger" })
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(m => m.Name, new { @class = "" })
                         <div class="">
-                            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @placeholder = "Название" })
+                            @Html.TextBoxFor(m => m.Name, new {
+                                @class = "form-control",
+                                @placeholder = "Название",
+                                @id = Html.IdFor(m => m.Name),
+                                @name = Html.IdFor(m => m.Name)
+                            })
                         </div>
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(m => m.Text, new { @class = "" })
                         <div class="">
-                            @Html.TextAreaFor(m => m.Text, new { @class = "form-control text-area message-text-area", @placeholder = "Текст" })
+                            @Html.TextAreaFor(m => m.Text, new {
+                                @class = "form-control text-area message-text-area",
+                                @placeholder = "Текст",
+                                @id = Html.IdFor(m => m.Text),
+                                @name = Html.IdFor(m => m.Text)
+                            })
                         </div>
+                        @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="text-center justify-content-between row p-a-1 pt-0">

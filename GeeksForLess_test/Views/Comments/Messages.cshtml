@@ -9,32 +9,32 @@ else
 {
     foreach (var Message in Model)
     {
-        <div class="message-body card row flex-row mb-3 pt-3 pb-3" id="@Message.Comment.Id">
-            <div class="col-2 align-self-start">
-                <a href="/Account/?ID=@Message.Comment.AspNetUsers.Id" class="message-author">
-                    <div class="author-avatar img-thumbnail rounded-circle">
+        <div class="message-body card row flex-md-row mb-3 pt-3 pb-2" id="@Message.Comment.Id">
+            <div class="col-sm-12 col-md-2 align-self-start avatar-wrapper">
+                <a href="/Account/?ID=@Message.Comment.AspNetUsers.Id" class="message-author d-flex flex-md-column">
+                    <div class="author-avatar img-thumbnail rounded-circle col-sm-2 pl-0 pr-0">
                         <img src='@(Message.Comment.AspNetUsers.Avatar ?? "/Content/img/default_user.png")' class='rounded-circle' />
                     </div>
-                    <div class="message-author text-center">
+                    <div class="message-author text-md-center col-md-12 col-sm-10 pl-0 pr-0 align-self-center">
                         <h6>@Message.Comment.AspNetUsers.Name</h6>
                     </div>
                 </a>
             </div>
-            <div class="col-10">
-                <div class="message-head pb-1 mb-2">
-                    <div class="message-publication-date text-left row ml-1">
+            <div class="col-sm-12 col-md-10">
+                <div class="message-head pb-1 mb-3">
+                    <div class="message-publication-date text-left row mx-auto pb-2">
                         <p class="mb-0">
                             <i class="fa fa-clock-o" aria-hidden="true"></i>
                             @(Message.Comment.Publication_date.HasValue ? Message.Comment.Publication_date.Value.ToString("dd.MM.yyyy - H:MM") : "")
                         </p>
                         @if (Message.Comment.Reply_to != null)
                         {
-                            <p>
+                            <p class="mb-0">
                                 <i class="fa fa-reply-all ml-4" aria-hidden="true"></i>
                                 #@Message.Comment.Reply_to
                             </p>
                         }
-                        <p class="col text-right">#@Message.Comment.Id</p>
+                        <p class="col text-right mb-0">#@Message.Comment.Id</p>
                     </div>
                 </div>
                 <div class="message-text">
@@ -49,13 +49,13 @@ else
                                 <button class="btn-action btn-change" data-action="change" data-path="/Comments/ChangeComment/"
                                         data-bind="@Message.Comment.Id" data-toggle="modal" data-target="#Modal" data-whatever="Редакировать комментарий">
                                     <i class="fa fa-pencil" aria-hidden="true"></i>
-                                    <span class="text-uppercase hidden-sm-down">редакировать</span>
+                                    <span class="text-uppercase">редакировать</span>
                                 </button>
                             </div>
                             <div class="message-delete message-addition">
                                 <a href="/Comments/RemoveComment/@Message.Comment.Id" role="button" class="btn-action btn-delete" data-action="delete">
                                     <i class="fa fa-times" aria-hidden="true"></i>
-                                    <span class="text-uppercase hidden-sm-down">удалить</span>
+                                    <span class="text-uppercase">удалить</span>
                                 </a>
                             </div>
                         }
@@ -65,7 +65,7 @@ else
                                 <button class="btn-action btn-reply" data-action="reply" data-path="/Comments/AddMessage/" 
                                     data-target="@Message.Comment.Id">
                                     <i class="fa fa-reply" aria-hidden="true"></i>
-                                    <span class="text-uppercase hidden-sm-down">ответить</span>
+                                    <span class="text-uppercase">ответить</span>
                                 </button>
                             </div>
                         }

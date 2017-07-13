@@ -2,7 +2,7 @@
 @model CommentViewModel
 
 @using (Html.BeginForm("AddComment", "Comments", new { ReturnUrl = ViewBag.ReturnUrl },
-    FormMethod.Post, new { @class = "form-horizontal mt-5 new-message", role = "form" }))
+    FormMethod.Post, new { @class = "form-horizontal mt-4 new-message", role = "form" }))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -10,7 +10,7 @@
     <div class="message-body card row flex-row mb-3 pt-3 pb-3 new-comment">
         <h4 class="col-12 mb-4 part-title">Оставить комментарий</h4>
         <div class="col col-sm-0 hidden-sm-down align-self-start new-comment-avatar-wrapper">
-            <a href="/Account/?ID=@Model.Author.Id" class="message-author">
+            <a href="/Account/@Model.Author.Id" class="message-author">
                 <div class="author-avatar rounded-circle">
                     <img src='@(Model.Author.Avatar ?? "/Content/img/default_user.png")' class='rounded-circle' />
                 </div>
@@ -39,7 +39,6 @@
         </div>
     </div>
 }
-
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

@@ -344,25 +344,20 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill{
 .theme{
     .theme-main{
         .theme-author{
-            .theme-author{
-                color: #000;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                .transition(all, .2s, ease);
-            }
-            
+            color: #000;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            .transition(all, .2s, ease);
+                            
             &:hover{
                 text-decoration: none;
+                    color: #8a8a8a;
 
                 .author-avatar {
                     img{
                         .scale(1.15);
                     }
-                }
-
-                .theme-author{
-                    color: #8a8a8a;
                 }
             }
         }
@@ -530,7 +525,7 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill{
 
                 p{
                     i{
-                        margin-right: .5rem;
+                        margin-right: .35rem;
                     }
                 }
             }
@@ -661,12 +656,102 @@ footer {
             text-align: left !important;
         }
     }
+    
+    .theme{
+        .theme-main {
+            flex-direction: column;
+
+            .theme-author{
+                margin-bottom: 1rem;
+                padding: 0;
+
+                .author-avatar{
+                    max-width: 50px;
+                    margin-right: .5rem;
+                }
+            }
+
+            .theme-body{
+                &:before{
+                    left: 15px;
+                    top: -10px;
+                    border-top: none;
+                    border-left: 10px solid transparent;
+                    border-bottom: 10px solid #bb7070;
+                    border-right: 10px solid transparent;
+                }
+            }
+        }
+    }
+
+    .one-theme-show{
+        .theme-main {
+            .avatar-wrapper{
+                margin-bottom: .75rem;
+
+                .author-avatar{
+                    max-width: 100px;
+                }
+            }
+
+            .theme-body{
+                &:before{
+                    left: calc(~"50% - 10px");
+                }
+            }
+        }
+    }
+
+    .theme-comments{
+        .message-body{
+            .avatar-wrapper{
+                margin-bottom: .25em;
+
+                .author-avatar{
+                    max-width: 40px;
+                    margin-right: .5rem;
+                }
+
+                h6{
+                    margin: 0;
+                    font-size: 1.1rem;
+                }
+            }
+
+            .message-text {
+                font-size: 1rem;
+            }
+
+            .message-additions{
+                justify-content: space-between;
+            }
+        }
+    }
 
     .btn-action{
         padding: .25rem .5rem;
 
         i{
             margin: 0;
+        }
+
+        span{    
+            margin-left: .25rem;
+            vertical-align: top;
+        }
+    }
+
+    .theme-messages{
+        .message-body{
+            .message-head{
+                .message-publication-date{
+                    p{
+                        i{
+                            margin-right: .25rem;
+                        }
+                    }
+                }
+            }
         }
     }
 

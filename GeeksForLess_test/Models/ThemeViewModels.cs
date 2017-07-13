@@ -34,7 +34,7 @@ namespace GeeksForLess_test.Models
         [Display(Name = "Текст темы")]
         public string Text { get; set; }
 
-        public string MainThemeId { get; set; }
+        public long? MainThemeId { get; set; }
 
         [Display(Name = "Главная тема")]
         public IEnumerable<SelectListItem> MainTheme { get; set; }

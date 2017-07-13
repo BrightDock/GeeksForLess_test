@@ -124,7 +124,7 @@ namespace GeeksForLess_test.Controllers
         {
             if (ID == 0)
             {
-                return View("Error");
+                return RedirectToAction("Index", "Themes");
             }
 
             var db = new GeeksForLessTestDBEntities();
@@ -148,7 +148,7 @@ namespace GeeksForLess_test.Controllers
             {
                 Text = themes.Name,
                 Value = themes.Id.ToString(),
-                Selected = (themeView.MainThemeId == themes.Id.ToString() ? true : false)
+                Selected = (themeView.MainThemeId.HasValue && themeView.MainThemeId.Value == themes.Id ? true : false)
             }));
             themeView.Id = ID;
             themeView.Name = Theme.Name;
@@ -160,26 +160,25 @@ namespace GeeksForLess_test.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ChangeTheme(ChangeThemeViewModel model)
+        public async Task<ActionResult> ChangeTheme(ChangeThemeViewModel model, string returnUrl)
         {
-            Themes Theme;
-            long temp;
-            long.TryParse(model.MainThemeId, out temp);
+            if (model == null)
+            {
+                return RedirectToLocal(returnUrl);
+            }
 
             var db = new GeeksForLessTestDBEntities();
-            Theme = db.Themes.Find(model.Id);
-            var mainTheme = db.Themes.Find(temp);
+            var Theme = db.Themes.FirstOrDefault(m => m.Id == model.Id);
                 
             if (Theme != null)
             {
-                Theme.Main_theme = mainTheme.Id;
+                Theme.Main_theme = model.MainThemeId;
                 Theme.Name = model.Name;
                 Theme.Text = model.Text;
-            }
-                
-            db.SaveChanges();
+            }  
+            await db.SaveChangesAsync();
 
-            return RedirectToAction("GetTheme", "Themes", new { ID = Theme.Id });
+            return RedirectToAction("GetTheme", "Themes", new { ID = model.Id });
         }
 
         public async Task<ActionResult> RemoveTheme(long ID)
@@ -196,6 +195,15 @@ namespace GeeksForLess_test.Controllers
         private void AddErrors(int result)
         {
             ModelState.AddModelError("", new Exception(result.ToString()));
+        }
+
+        private ActionResult RedirectToLocal(string returnUrl)
+        {
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+            return RedirectToAction("Index", "Home");
         }
     }
 }
