@@ -85,10 +85,3 @@ else
         </div>
     }
 }
-
-@{
-    ViewBag.U = ViewBag.user;
-    var theme = ViewBag.Theme;
-
-    Html.RenderAction("AddComment", "Comments", new { ID = theme.Id });
-}

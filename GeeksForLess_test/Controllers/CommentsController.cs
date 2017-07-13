@@ -99,7 +99,7 @@ namespace GeeksForLess_test.Controllers
 
         [Authorize]
         [HttpPost]
-        public ActionResult ChangeComment(ChangeCommentViewModel model, string returnUrl)
+        public async Task<ActionResult> ChangeComment(ChangeCommentViewModel model, string returnUrl)
         {
             if (model == null || !model.Id.HasValue)
             {
@@ -115,7 +115,7 @@ namespace GeeksForLess_test.Controllers
                 Comment.Reply_to = model.ReplyToId;
                 Comment.Text = model.Message.Text;
             }
-            db.SaveChanges();
+            await db.SaveChangesAsync();
 
 
             var theme = Comment.Themes;

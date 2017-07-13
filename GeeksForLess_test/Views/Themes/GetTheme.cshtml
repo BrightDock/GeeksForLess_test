@@ -19,7 +19,7 @@
                 </button>
             </div>
             @{Html.RenderPartial("_LikesPart",
-                    new Tuple<IEnumerable<GeeksForLess_test.Models.Likes>, long>(Model.Likes, Model.Theme.Id)); }
+  new Tuple<IEnumerable<GeeksForLess_test.Models.Likes>, long>(Model.Likes, Model.Theme.Id)); }
         </div>
     </div>
     @if (Model.Theme.AspNetUsers.UserName == User.Identity.Name)
@@ -65,10 +65,15 @@
         <!--     Theme messages       -->
         <hr />
         <div class="col theme-messages">
+            <div class="theme-comments">
             @{
-                ViewBag.Theme = Model.Theme;
+                var theme = Model.Theme;
+                Html.RenderPartial("~/Views/Comments/Messages.cshtml", Model.MessagesLikes);
             }
-            @Html.Partial("~/Views/Comments/Messages.cshtml", Model.MessagesLikes)
+            </div>
+            @{ 
+                Html.RenderAction("AddComment", "Comments", new { ID = theme.Id });
+            }
         </div>
     </div>
 
