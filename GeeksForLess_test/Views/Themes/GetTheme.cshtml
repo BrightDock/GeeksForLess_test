@@ -19,7 +19,7 @@
                 </button>
             </div>
             @{Html.RenderPartial("_LikesPart",
-  new Tuple<IEnumerable<GeeksForLess_test.Models.Likes>, long>(Model.Likes, Model.Theme.Id)); }
+                new Tuple<IEnumerable<GeeksForLess_test.Models.Likes>, long>(Model.Likes, Model.Theme.Id)); }
         </div>
     </div>
     @if (Model.Theme.AspNetUsers.UserName == User.Identity.Name)
@@ -40,9 +40,10 @@
         <div class="col theme mb-4 one-theme-show">
             <div class="row theme-main">
                 <div class="col-sm-12 col-md-2 align-self-start avatar-wrapper">
-                    <a href="/Account/@Model.Theme.AspNetUsers.Id" class="theme-author">
+                    <a href="/Account/?ID=@Model.Theme.AspNetUsers.Id" class="theme-author">
                         <div class="author-avatar img-thumbnail rounded-circle mx-auto">
-                            <img src='@(Model.Theme.AspNetUsers.Avatar ?? "/Content/img/default_user.png")' class='rounded-circle' />
+                            <img src='@(Model.Theme.AspNetUsers.Avatar ?? "/Content/img/default_user.png")?w=100&h=100&scale=both&cropxunits=100&croupyunits=100' 
+                                 class='rounded-circle' />
                         </div>
                     </a>
                 </div>

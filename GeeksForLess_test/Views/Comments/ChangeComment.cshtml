@@ -1,8 +1,6 @@
 ﻿@using GeeksForLess_test.Models
 @model ChangeCommentViewModel
 
-@ViewBag.messagesCount
-
 @if (Model != null)
 {
     try
@@ -12,6 +10,7 @@
             using (Html.BeginForm("ChangeComment", "Comments", new { ReturnUrl = ViewBag.ReturnUrl },
                 FormMethod.Post, new { @class = "form-horizontal new-message", role = "form", id = "change-message-form" }))
             {
+                @Html.AntiForgeryToken()
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
                 if (Model.ReplyToList != null || Model.ReplyToList.Count() != 0)
@@ -49,7 +48,15 @@
 
         modalButton.click(function () {
             modalButton.off();
-            sendAjax(form.attr('action'), form, $('.theme-comments'));
+
+            if (typeof modal == 'undefined') {
+                modal.find('.modal-body').empty();
+                modal.find('.modal-body').html('<div class="progress">' +
+                    '<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"' +
+                    'aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div></div>');
+            }
+
+            sendAjax(form.attr('action'), form, $('.theme-comments'), isSerialize = true);
         });
     </script>
 

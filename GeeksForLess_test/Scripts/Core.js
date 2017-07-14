@@ -146,27 +146,40 @@ $('.btn-reply').click(function () {
     });
 });
 
-function sendAjax(url, form, resultBlock) {
-    var data = $(form).serialize();
+function sendAjax(url, form, resultBlock, isSerialize) {
+    var data;
+    var type;
 
-    modal.find('.modal-body').empty();
-    modal.find('.modal-body').html('<div class="progress">' +
-        '<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"' +
-        'aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div></div>');
+    if (typeof isSerialize == 'undefined' || isSerialize == true) {
+        data = $(form).serialize();
+    }
+    else {
+        type = false;
+        data = form;
+    }
 
     $.ajax({
         type: 'POST',
         url: url,
         data: data,
+        contentType: type,
+        processData: false,
         success: function (result) {
-            $(resultBlock).html(result);
-            modal.modal('hide');
-            modal.find('.modal-body').empty();
+            if (typeof result !== 'undefined') {
+                $(resultBlock).html(result);
+            }
+
+            if (typeof modal !== 'undefined') {
+                modal.modal('hide');
+                modal.find('.modal-body').empty();
+            }
         },
         error: function (xhr, str) {
-//            alert('Возникла ошибка: ' + xhr.responseCode);
-            modal.modal('hide');
-            modal.find('.modal-body').empty();
+            alert('Возникла ошибка: ' + xhr.responseCode);
+            if (typeof modal !== 'undefined') {
+                modal.modal('hide');
+                modal.find('.modal-body').empty();
+            }
         }
     });
 }

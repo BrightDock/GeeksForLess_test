@@ -9,6 +9,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using GeeksForLess_test.Models;
+using System.IO;
+using System.Collections.Generic;
 
 namespace GeeksForLess_test.Controllers
 {
@@ -111,6 +113,37 @@ namespace GeeksForLess_test.Controllers
                     ModelState.AddModelError("", "Неудачная попытка входа.");
                     return View(model);
             }
+        }
+
+        //
+        // POST /Account/UpdateAvatar
+        [Authorize]
+        [HttpPost]
+        public async Task<ActionResult> UpdateAvatar(string ID) {            
+            var db = new GeeksForLessTestDBEntities();
+            var userAvatar = db.AspNetUsers.FirstOrDefault(m => m.Id == ID);
+
+
+            if (string.IsNullOrEmpty(ID) || Request.Files["avatar"] == null)
+            {
+                return PartialView("UserAvatar", userAvatar.Avatar);
+            }
+
+            var file = @Request.Files["avatar"];
+            string fileName;
+            string filePath;
+            string json = string.Empty;
+            fileName = file.FileName;
+            Directory.CreateDirectory(Server.MapPath("~/Content/img/"));
+            filePath = Path.Combine(Server.MapPath("~/Content/img/" + fileName));
+            file.SaveAs(filePath);
+            
+
+
+            userAvatar.Avatar = "/Content/img/" + fileName;
+            await db.SaveChangesAsync();
+
+            return PartialView("UserAvatar", userAvatar.Avatar ?? "");
         }
 
         //

@@ -6,9 +6,9 @@
 }
 
 <div class="row p-a-1">
-    <div class="user-detailed col-md-2 align-self-start">
+    <div class="user-detailed col-md-2 mb-3 align-self-start @(Model.UserName == User.Identity.Name ? "own-account" : "")">
         <div class="author-avatar img-thumbnail rounded-circle">
-            <img src='@(Model.Avatar ?? "/Content/img/default_user.png")' class='rounded-circle' />
+            @Html.Partial("UserAvatar", string.IsNullOrEmpty(Model.Avatar) ? string.Empty : Model.Avatar)
         </div>
     </div>
     <div class="col-md-10 align-self-start">
@@ -39,7 +39,7 @@
                     </div>
                     <div class="col text-center display-5 about-addition">
                         <p class="mb-2">@Model.Themes.Count</p>
-                        <p class="h6 fw-2 text-uppercase">@Declension.GetDeclension(Model.Themes.Count, "публикация", "публикации", "публикаций")<br />написал</p>
+                        <p class="h6 fw-2 text-uppercase">@Declension.GetDeclension(Model.Themes.Count, "публикацию", "публикации", "публикаций")<br />написал</p>
                     </div>
                     <div class="col text-center display-5 about-addition">
                         <p class="mb-2">@Model.Themes_messages.Count</p>

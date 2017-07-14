@@ -13,7 +13,8 @@ else
             <div class="col-sm-12 col-md-2 align-self-start avatar-wrapper">
                 <a href="/Account/?ID=@Message.Comment.AspNetUsers.Id" class="message-author d-flex flex-md-column">
                     <div class="author-avatar img-thumbnail rounded-circle col-sm-2 pl-0 pr-0">
-                        <img src='@(Message.Comment.AspNetUsers.Avatar ?? "/Content/img/default_user.png")' class='rounded-circle' />
+                        <img src='@(Message.Comment.AspNetUsers.Avatar ?? "/Content/img/default_user.png")?w=100&h=100&scale=both&cropxunits=100&croupyunits=100' 
+                             class='rounded-circle' />
                     </div>
                     <div class="message-author text-md-center col-md-12 col-sm-10 pl-0 pr-0 align-self-center">
                         <h6>@Message.Comment.AspNetUsers.Name</h6>

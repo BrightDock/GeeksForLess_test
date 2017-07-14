@@ -6,9 +6,10 @@
 {
     <div class="theme mb-4 col">
         <div class="row theme-main">
-            <a href="/Account/@theme.Theme.AspNetUsers.Id" class="theme-author col-sm-12 col-md-2 d-flex flex-md-column mx-auto align-self-start">
+            <a href="/Account/?ID=@theme.Theme.AspNetUsers.Id" class="theme-author col-sm-12 col-md-2 d-flex flex-md-column mx-auto align-self-start">
                 <div class="author-avatar img-thumbnail rounded-circle">
-                    <img src='@(theme.Theme.AspNetUsers.Avatar ?? "/Content/img/default_user.png")' class='rounded-circle' />
+                    <img src='@(theme.Theme.AspNetUsers.Avatar ?? "/Content/img/default_user.png")?w=100&h=100&scale=both&cropxunits=100&croupyunits=100' 
+                         class='rounded-circle' />
                 </div>
                 <div class="text-md-center mt-2 pl-0 pr-0 col-sm-10 col-md-12 align-self-center">
                     <h5>@theme.Theme.AspNetUsers.Name</h5>
