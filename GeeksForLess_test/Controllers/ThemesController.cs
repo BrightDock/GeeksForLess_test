@@ -7,6 +7,7 @@ using GeeksForLess_test.Models;
 using PagedList.Mvc;
 using PagedList;
 using System.Threading.Tasks;
+using System.Data.Entity;
 
 namespace GeeksForLess_test.Controllers
 {
@@ -18,6 +19,7 @@ namespace GeeksForLess_test.Controllers
         {
             var db = new GeeksForLessTestDBEntities();
             var themesList = new List<ThemeModel>();
+
 
             foreach (var theme in db.Themes)
             {
@@ -38,11 +40,12 @@ namespace GeeksForLess_test.Controllers
             }
 
             var db = new GeeksForLessTestDBEntities();
-            
+
             var theme = db.Themes.FirstOrDefault(Theme => Theme.Id == ID);
             var likes = db.Likes.Where(Like => Like.Target == theme.Id);
+            db.Configuration.LazyLoadingEnabled = false;
 
-            var Messages = db.Themes_messages.Where(themeMessage => themeMessage.Theme == theme.Id);
+            var Messages = db.Themes_messages.Where(themeMessage => themeMessage.Theme == theme.Id).Include(t => t.AspNetUsers);
             var MessageLikes = new List<CommentLikesView>();
             foreach (var message in Messages)
             {
